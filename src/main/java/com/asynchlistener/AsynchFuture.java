@@ -22,7 +22,7 @@ public class AsynchFuture<T> extends FutureTask<T> implements AsynchListener<T> 
     }
 
     public void listenAsynch(FutureCompletionListener<T> listener) {
-        AsynchListener<T> asynchListener = new AsynchListener<T>(listener, this);
+        AsynchListener<T> asynchListener = new AsynchListener<T>(listener);
         Thread t = new Thread(asynchListener);
         t.start();
     }
@@ -46,7 +46,7 @@ public class AsynchFuture<T> extends FutureTask<T> implements AsynchListener<T> 
 
         private final FutureCompletionListener listener;
 
-        public AsynchListener(FutureCompletionListener listener, FutureTask<T> future) {
+        public AsynchListener(FutureCompletionListener listener) {
             this.listener = listener;
         }
 
@@ -57,7 +57,7 @@ public class AsynchFuture<T> extends FutureTask<T> implements AsynchListener<T> 
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             } catch (ExecutionException e) {
-
+                e.printStackTrace();
             }
         }
     }
